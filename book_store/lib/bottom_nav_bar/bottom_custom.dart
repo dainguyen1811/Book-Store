@@ -1,6 +1,6 @@
-import 'package:book_store/page/account.dart';
-import 'package:book_store/page/home_page.dart';
-import 'package:book_store/library/library.dart';
+import 'package:book_store/home/account.dart';
+import 'package:book_store/home/home_page.dart';
+import 'package:book_store/home/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

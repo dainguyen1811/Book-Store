@@ -1,6 +1,7 @@
 import 'package:book_store/book/book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class GreatBookDetails extends StatefulWidget {
   final GreatBook grb;
@@ -18,19 +19,31 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         centerTitle: false,
-        title: Text(
-          "Quay lại",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 20,
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Quay lại",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontSize: 20,
+              ),
+            ),
+            IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  CupertinoIcons.shopping_cart,
+                  size: 30,
+                ))
+          ],
         ),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
           child: (Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15,
+            ),
             child: Column(
               children: [
                 SizedBox(
@@ -64,6 +77,24 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                     ),
                   ),
                 ),
+                Row(
+                  children: [
+                    Text(
+                      'đ',
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: const Color.fromARGB(255, 255, 111, 79),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      '${NumberFormat("#,##0.000", "en_US").format(widget.grb.price)}',
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Color.fromARGB(255, 255, 111, 79),
+                          fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
                 SizedBox(
                   height: 25,
                 ),
@@ -91,16 +122,23 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                     ),
                   ],
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Mua"),
-                  style: ButtonStyle(),
-                )
               ],
             ),
           )),
         ),
-      ),
+        bottomNavigationBar: BottomNavigationBar(items: [
+          
+             BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.chat_bubble_2), label: "Chat ngay"),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.shopping_cart), label: "Thêm vào giỏ hàng"),
+          BottomNavigationBarItem(
+              icon: Icon(
+                CupertinoIcons.person,
+              ),
+              label: "Mua ngay"),
+        ]),
+       
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:book_store/book/book.dart';
-import 'package:book_store/continue_book/continue_book_details.dart';
-import 'package:book_store/page/account.dart';
+import 'package:book_store/home/page/continue_book/continue_book_details.dart';
+import 'package:book_store/home/account.dart';
+import 'package:book_store/home/page/libraby_page/great_books_details.dart';
+import 'package:book_store/home/page/top_pick_list/top_pick_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
+
+  final List<Widget> accountPage = [
+    Account(),
+  ];
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,29 +44,17 @@ class _HomePageState extends State<HomePage> {
                         color: Colors.black,
                       ),
                     ),
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Account(),
-                          ),
-                        );
+                        setState(() {
+                          selectedIndex = 0;
+                        });
                       },
-                      child: Container(
-                        margin: const EdgeInsets.all(10),
-                        width: 45.0,
-                        height: 45.0,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: const CircleAvatar(
-                          radius: 50.0, // Bán kính ảnh
-                          backgroundImage: NetworkImage(
-                              'https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/349343515_792596609103521_5366526118614132792_n.jpg?stp=dst-jpg_s480x480&_nc_cat=111&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=YlciateOE-MQ7kNvgEDav2N&_nc_ht=scontent.fhan2-3.fna&_nc_gid=AZr2YFNQ9yj2hSI5Gfgr4eO&oh=00_AYDZixrVjYLbHSDR37W1p6w5IJB_W0unyM1rR_Cy7_XOBQ&oe=66EDA95B'), // Ảnh nền
-                        ),
+                      child: CircleAvatar(
+                        backgroundImage: NetworkImage(
+                            'https://scontent.fhan14-3.fna.fbcdn.net/v/t39.30808-6/349343515_792596609103521_5366526118614132792_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHd7bS1N0MITs4oVp1Z9ETKVBWNZXh_5kRUFY1leH_mRKYsFUNmy1NvAraNlBVZ-5f82FBlvCgcB71FL30JzcBk&_nc_ohc=tRhwmzHXEJ8Q7kNvgHQthp6&_nc_ht=scontent.fhan14-3.fna&_nc_gid=AZmf8uaikKJ6qK3RAI_bY9M&oh=00_AYAAUAeageWlimgW-yWEF-zOitwZg5mztgT6ouWORRhHgA&oe=66F6FA5D'),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -83,11 +77,14 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.blue,
                           fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(width:100,),
-                    Text('Lê Naruto', style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold
-                          ),),
+                    SizedBox(
+                      width: 100,
+                    ),
+                    Text(
+                      'Lê Naruto',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -150,10 +147,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: Expanded(
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           vertical: 10, horizontal: 10),
                                       width: 150.0,
                                       height: 150.0,
@@ -181,14 +179,14 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         Text(
                                           ctnBook[index].name,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 12,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           ctnBook[index].authorname,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               color: Colors.white),
                                         ),
@@ -198,7 +196,7 @@ class _HomePageState extends State<HomePage> {
                                       alignment: Alignment.centerRight,
                                       child: IconButton(
                                         onPressed: () {},
-                                        icon: Icon(
+                                        icon: const Icon(
                                           Icons.more_horiz,
                                           color: Colors.white,
                                         ),
@@ -215,9 +213,17 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: Colors.grey),
+                ),
+                const SizedBox(
                   height: 15,
                 ),
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -227,13 +233,108 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text('Mọi thời đại',
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold))
+                    Text(
+                      'Mọi thời đại',
+                      style: TextStyle(
+                          fontSize: 30,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ],
-                )
+                ),
+                Visibility(
+                  child: SizedBox(
+                    width: size.width,
+                    height: 350,
+                    child: ListView.builder(
+                      itemCount: topPicks.length,
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        final toppicks = topPicks[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    GreatBookDetails(grb: topPicks[index]),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Container(
+                              width: size.width / 2,
+                              margin: const EdgeInsets.only(right: 10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(width: 0.5)),
+                                        child: Image.asset(
+                                          toppicks.image,
+                                          fit: BoxFit.cover,
+                                        )),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      toppicks.name,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  height: 1,
+                  width: double.infinity,
+                  decoration: BoxDecoration(color: Colors.grey),
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TopPickList(listtp: context),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          'Xem tất cả',
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                        ),
+                        Icon(
+                          Icons.arrow_right,
+                          size: 20,
+                          color: Colors.black,
+                        )
+                      ],
+                    ))
               ],
             ),
           ),

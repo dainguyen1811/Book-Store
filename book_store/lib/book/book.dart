@@ -44,50 +44,50 @@ List<GreatBook> greatBook = [
       price: 120.000),
 ];
 
-class Novel {
-  final String name;
-  final String authorname;
-  final String description;
-  final String image;
-  final double price;
-
-  Novel(
-      {required this.name,
-      required this.authorname,
-      required this.description,
-      required this.image,
-      required this.price});
+class RecommendBook extends GreatBook {
+  RecommendBook({name, authorname, description, image, price})
+      : super(
+            name: name,
+            authorname: authorname,
+            description: description,
+            image: image,
+            price: price);
 }
 
-class RecommemndBook {
-  final String name;
-  final String image;
-  final String authorname;
-
-  RecommemndBook(
-      {required this.name, required this.image, required this.authorname});
-}
-
-final List<RecommemndBook> recommendBook = [
-  RecommemndBook(
-      name: 'Bố già',
-      authorname: 'Mario Puzo',
-      image: 'book_store/image/bogia.jpeg'),
-  RecommemndBook(
-      name: 'Nghĩ giàu làmg giàu',
-      authorname: 'Napoleon Hill',
-      image: 'book_store/image/nghigiau.jpeg'),
-  RecommemndBook(
-      name: 'Nhà giả kim',
-      authorname: 'Paulo Coelho',
-      image: 'book_store/image/nhagiakim1.jpeg'),
+final List<RecommendBook> recommendBook = [
+  RecommendBook(
+    name: 'Bố già',
+    authorname: 'Mario Puzo',
+    image: 'image/bogia.jpeg',
+    description: '',
+    price: 150.000,
+  ),
+  RecommendBook(
+    name: 'Nghĩ giàu làm giàu',
+    authorname: 'Napoleon Hill',
+    image: 'image/nghigiau.jpeg',
+    description: '',
+    price: 150.000,
+  ),
+  RecommendBook(
+    name: 'Nhà giả kim',
+    authorname: 'Paulo Coelho',
+    image: 'image/nhagiakim1.jpeg',
+    description: '',
+    price: 150.000,
+  ),
 ];
 
-class RomanceNovel {
+class RomanceNovel implements GreatBook {
+  @override
   final String name;
+  @override
   final String authorname;
+  @override
   final String description;
+  @override
   final String image;
+  @override
   final double price;
 
   RomanceNovel(
@@ -97,6 +97,37 @@ class RomanceNovel {
       required this.image,
       required this.price});
 }
+
+final List<RomanceNovel> romanceNovels = [
+  RomanceNovel(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000),
+  RomanceNovel(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000),
+  RomanceNovel(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000),
+  RomanceNovel(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000)
+];
 
 class ContinueBook {
   final String name;
@@ -128,5 +159,85 @@ final List<ContinueBook> ctnBook = [
     authorname: "Văn Tình",
   ),
 ];
+
+class toppickBooks implements GreatBook {
+  @override
+  final String name;
+  @override
+  final String authorname;
+  @override
+  final String description;
+  @override
+  final String image;
+  @override
+  final double price;
+
+  toppickBooks(
+      {required this.name,
+      required this.authorname,
+      required this.description,
+      required this.image,
+      required this.price});
+}
+
+final List<toppickBooks> topPicks = [
+  toppickBooks(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000),
+       toppickBooks(
+        name: "Đắc nhân tâm ",
+      authorname: "Dale Carnegie",
+      description:
+          "Đắc nhân tâm là một trong những quyển sách hay nhất mà tôi từng đọc về kỹ năng giao tiếp và ứng xử. Qua những câu chuyện và ví dụ thực tế, tác giả Dale Carnegie đã chỉ ra rằng muốn thành công trong công việc và cuộc sống, chúng ta cần biết cách thu phục lòng người. Điều quan trọng nhất là phải thấu hiểu tâm lý con người, để từ đó biết cách tiếp cận và ứng xử phù hợp.",
+      image: "image/darknkantam.jpeg",
+      price: 150.000),
+       toppickBooks(
+     name: "Kẻ xuất chúng",
+      authorname: "MalColm GladWell",
+      description:
+          "Cuốn sách Những kẻ xuất chúng sẽ giúp bạn tìm ra câu trả lời thông qua các phân tích về xã hội, văn hóa và thế hệ của những nhân vật kiệt xuất như Bill Gates, Beatles và Mozart, bên cạnh những thất bại đáng kinh ngạc của một số người khác (ví dụ: Christopher Langan, người có chỉ số IQ cao hơn Einstein nhưng rốt cuộc lại quay về làm việc trong một trại ngựa). Theo đó, cùng với tài năng và tham vọng, những người thành công đều được thừa hưởng một cơ hội đặt biệt để rèn luyện kỹ năng và cho phép họ vượt lên những người cùng trang lứa.",
+      image: "image/kexuatchung.png",
+      price: 130.000),
+       toppickBooks(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000),
+       toppickBooks(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000),
+       toppickBooks(
+      name: "Vì sao bạn ế ?",
+      authorname: "Ngô Thế Vinh",
+      description:
+          "Cuốn sách là một “bản tuyên ngôn” đầy khí thế đáp trả lại cả thế giới – nơi luôn gắn giá trị người phụ nữ với tình trạng hôn nhân. Từ kinh nghiệm sống của mình, qua các bài phỏng vấn những người độc thân khác, cùng các bài nghiên cứu Tâm lý học và Xã hội học, tác giả Sara Eckel – một phụ nữ sống độc thân trong gần 40 năm, đã đúc rút ra rằng: Mối quan hệ tình cảm chỉ là do may mắn.",
+      image: "image/whyareyougay.jpeg",
+      price: 120.000),
+];
+
+class Novel {
+  final String name;
+  final String authorname;
+  final String description;
+  final String image;
+  final double price;
+
+  Novel(
+      {required this.name,
+      required this.authorname,
+      required this.description,
+      required this.image,
+      required this.price});
+}
 
 final List<String> Categorylist = ['Sách hay', 'Tiểu thuyết', 'Ngôn tình'];
