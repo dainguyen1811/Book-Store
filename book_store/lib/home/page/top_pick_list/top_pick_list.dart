@@ -2,11 +2,16 @@ import 'package:book_store/book/book.dart';
 import 'package:book_store/home/page/libraby_page/great_books_details.dart';
 import 'package:flutter/material.dart';
 
-class TopPickList extends StatelessWidget {
+class TopPickList extends StatefulWidget {
   final listtp;
   
   const TopPickList({super.key, required this.listtp});
 
+  @override
+  State<TopPickList> createState() => _TopPickListState();
+}
+
+class _TopPickListState extends State<TopPickList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

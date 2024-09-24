@@ -58,10 +58,16 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
                 Center(
                   child: Column(
                     children: [
-                      Image.asset(
-                        widget.continueBook.image,
-                        width: 250,
-                        height: 350,
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1),
+                        ),
+                        child: Image.asset(
+                          widget.continueBook.image,
+                          width: 250,
+                          height: 350,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
