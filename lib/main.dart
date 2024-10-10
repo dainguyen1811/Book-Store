@@ -52,7 +52,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: lightTheme,
       darkTheme: darkTheme,
-      themeMode: Provider.of<ThemeManager>(context).themeMode,
+      themeMode: _themeManager.themeMode,
+      // themeMode: Provider.of<ThemeManager>(context).themeMode,
       debugShowCheckedModeBanner: false,
       home: BottomCustom(),
     );

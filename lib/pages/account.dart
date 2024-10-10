@@ -139,6 +139,11 @@ class _AccountState extends State<Account> {
               const SizedBox(
                 height: 30,
               ),
+                Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey.shade300,
+              ),
               ListTile(
                 leading: Icon(
                   CupertinoIcons.settings,

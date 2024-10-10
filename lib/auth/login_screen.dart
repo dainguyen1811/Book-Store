@@ -13,9 +13,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  // var emailController = TextEditingController();
+  
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+   bool _obscurePassword = true;
+
 
   @override
   void dispose() {
@@ -99,11 +101,24 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     TextFormField(
                       controller: _passwordController,
-                      obscureText: true,
-                      decoration: const InputDecoration(
+                        obscureText: _obscurePassword,
+                      
+                      decoration:  InputDecoration(
                         labelText: 'Mật khẩu',
                         border: OutlineInputBorder(),
                         prefixIcon: Icon(Icons.lock),
+                         suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscurePassword 
+                              ? Icons.visibility_off 
+                              : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscurePassword = !_obscurePassword; 
+                            });
+                          },
+                        ),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
