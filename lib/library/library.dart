@@ -1,5 +1,6 @@
 import 'package:book_store/common/library_items/short_items_button.dart';
 import 'package:book_store/models/book.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../common/library_items/search_field.dart';
@@ -19,7 +20,6 @@ class _LibraryState extends State<Library> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -32,50 +32,52 @@ class _LibraryState extends State<Library> {
             const SizedBox(
               height: 30,
             ),
-            SizedBox(
-              height: 70,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: Categorylist.length,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = index;
-                      });
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 20),
-                      child: Column(
-                       
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 8),
-                            decoration: BoxDecoration(
-                                color: selectedIndex == index
-                                    ? Colors.black12
-                                    : Colors.white,
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(color: Colors.black45)),
-                            child: Center(
-                              child: Text(
-                                Categorylist[index],
-                                style: TextStyle(
-                                  color: selectedIndex == index
-                                      ? Colors.black
-                                      : Colors.black45,
-                                  fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 70,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: Categorylist.length,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 20),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 8),
+                              decoration: BoxDecoration(
+                                  // color: selectedIndex == index
+                                  //     ? Colors.black12
+                                  //     : Colors.white,
+                                  borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(width: 1)),
+                              child: Center(
+                                child: Text(
+                                  Categorylist[index],
+                                  style: TextStyle(
+                                    // color: selectedIndex == index
+                                    //     ? Colors.black
+                                    //     : Colors.black45,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
             Expanded(
@@ -83,7 +85,7 @@ class _LibraryState extends State<Library> {
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 10,
-                  mainAxisSpacing:0,
+                  mainAxisSpacing: 0,
                   childAspectRatio: 0.6,
                 ),
                 itemCount: selectedIndex == 0
@@ -112,26 +114,27 @@ class _LibraryState extends State<Library> {
                       children: [
                         Container(
                           margin: const EdgeInsets.all(10),
-                          
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 7,
-                                offset: Offset(0, 5),
-                                color: Colors.grey,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(width: 0.5),
                           ),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width - 10 ,
-                            height: (MediaQuery.of(context).size.width-10) *180/280,
-                                 // Fixed height
-                            child: Image.asset(
-                              currentBook.image,
-                              fit: BoxFit.cover,
+                            width: MediaQuery.of(context).size.width - 10,
+                            height: (MediaQuery.of(context).size.width - 10) *
+                                180 /
+                                280,
+                            // Fixed height
+                            child: CachedNetworkImage(
+                              imageUrl: currentBook.image,
+                              placeholder: (context, url) =>
+                                  const CircularProgressIndicator(),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
                             ),
+
+                            // child: Image.asset(
+                            //   currentBook.image,
+                            //   fit: BoxFit.cover,
+                            // ),
                           ),
                         ),
                         const SizedBox(height: 8.0),
@@ -144,7 +147,9 @@ class _LibraryState extends State<Library> {
                         ),
                         Text(
                           currentBook.authorname,
-                          style: const TextStyle(fontSize: 14, color: Colors.grey),
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
                         ),
                       ],
                     ),
@@ -158,8 +163,3 @@ class _LibraryState extends State<Library> {
     );
   }
 }
-
-
-  
-
-

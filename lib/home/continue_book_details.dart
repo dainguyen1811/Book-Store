@@ -14,7 +14,7 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+     
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -35,7 +35,7 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
                     const Text(
                       'Sách mới',
                       style: TextStyle(
-                        color: Colors.black,
+                        
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
@@ -80,7 +80,7 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
                               ),
                               Text(
                                 widget.continueBook.authorname,
-                                style: const TextStyle(fontSize: 15),
+                                style: const TextStyle(fontSize: 18),
                               ),
                             ],
                           ),
@@ -98,7 +98,7 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
                       Container(
                         width: double.infinity,
                         height: 4,
-                        color: Colors.grey.shade200,
+                        color: Colors.grey.shade300,
                       ),
                     ],
                   ),
@@ -106,7 +106,7 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
                 Text(
                   '"Đọc sách có thể không giàu, nhưng không đọc, chắc chắn nghèo"',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, color: Colors.grey.shade700),
+                  style: TextStyle(fontSize: 16,),
                 ),
                 const SizedBox(
                   height: 20,
@@ -114,7 +114,7 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
                 Container(
                   height: 20,
                   width: double.infinity,
-                  color: Colors.grey.shade200,
+                  color: Colors.grey.shade300,
                 ),
                 const SizedBox(
                   height: 10,
@@ -125,7 +125,7 @@ class _ConinueBookDetailsState extends State<ContinueBookDetails> {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    
                   ),
                 ),
                 // SizedBox(

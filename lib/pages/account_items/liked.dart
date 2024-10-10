@@ -6,13 +6,8 @@ class Liked extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(
-          color: Colors.blue,
-          size: 25
-        ),
+        iconTheme: const IconThemeData(size: 25),
         title: const Text('Các sản phẩm đã thích'),
       ),
     );

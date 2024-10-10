@@ -12,7 +12,6 @@ class BottomCustom extends StatefulWidget {
 }
 
 class _BottomCustomState extends State<BottomCustom> {
-
   int selectedIndex = 0;
   late final List<Widget> page;
 
@@ -28,15 +27,8 @@ class _BottomCustomState extends State<BottomCustom> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      backgroundColor: Colors.white,
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey.shade200,
-        elevation: 0,
-        iconSize: 30,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         currentIndex: selectedIndex,
         onTap: (index) {
@@ -46,7 +38,7 @@ class _BottomCustomState extends State<BottomCustom> {
         },
         items: const [
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.home), label: "Trang chủ"),
+              icon: Icon(CupertinoIcons.home), label: "Trang chủ",),
           BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.book), label: "Thư viện"),
           BottomNavigationBarItem(

@@ -1,8 +1,10 @@
 import 'package:book_store/models/book.dart';
 import 'package:book_store/home/continue_book_details.dart';
+import 'package:book_store/models/theme_constants.dart';
 import 'package:book_store/pages/account.dart';
 import 'package:book_store/library/great_books_details.dart';
 import 'package:book_store/home/top_pick_list.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -39,14 +40,9 @@ class _HomePageState extends State<HomePage> {
                       'Trang chủ',
                       style: TextStyle(
                         fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                        fontWeight: FontWeight.normal,
                       ),
                     ),
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(
-                          'https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/349343515_792596609103521_5366526118614132792_n.jpg?stp=dst-jpg_s480x480&_nc_cat=111&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=DvjFY0EF8ZgQ7kNvgFdRI-r&_nc_ht=scontent.fhan2-3.fna&oh=00_AYDGYEcZb2TCZtkZ61oaAAgqjRmGmfkorUjzT0Vrr1NYYg&oe=67001E5B'),
-                    )
                   ],
                 ),
                 const SizedBox(
@@ -56,7 +52,6 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Icon(
                       Icons.check_circle,
-                      color: Colors.blue,
                       size: 20,
                     ),
                     SizedBox(
@@ -64,10 +59,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Text(
                       'Chủ đề hôm nay',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       width: 100,
@@ -88,7 +81,6 @@ class _HomePageState extends State<HomePage> {
                 const Text(
                   "Khám phá thêm",
                   style: TextStyle(
-                    color: Colors.black,
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                   ),
@@ -123,14 +115,7 @@ class _HomePageState extends State<HomePage> {
                               decoration: BoxDecoration(
                                 color: (index % 2 == 0)
                                     ? const Color.fromARGB(159, 254, 163, 117)
-                                    : const Color.fromARGB(255, 0, 91, 166),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    blurRadius: 7,
-                                    offset: Offset(0, 5),
-                                    color: Colors.grey,
-                                  ),
-                                ],
+                                    : const Color.fromARGB(255, 57, 166, 255),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Row(
@@ -147,10 +132,14 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20.0),
-                                      child: Image.asset(
-                                        bookreadding.image,
-                                        fit: BoxFit.cover,
+                                      child: CachedNetworkImage(
+                                        imageUrl: bookreadding.image,
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
                                       ),
+                                     
                                     ),
                                   ),
                                   const SizedBox(width: 10),
@@ -165,14 +154,13 @@ class _HomePageState extends State<HomePage> {
                                           bookreadding.name,
                                           style: const TextStyle(
                                               fontSize: 12,
-                                              color: Colors.white,
                                               fontWeight: FontWeight.bold),
                                         ),
                                         Text(
                                           bookreadding.authorname,
                                           style: const TextStyle(
-                                              fontSize: 15,
-                                              color: Colors.white),
+                                            fontSize: 15,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -183,7 +171,6 @@ class _HomePageState extends State<HomePage> {
                                       onPressed: () {},
                                       icon: const Icon(
                                         Icons.more_horiz,
-                                        color: Colors.white,
                                       ),
                                     ),
                                   ),
@@ -212,17 +199,13 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       'Bán chạy nhất',
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       'Mọi thời đại',
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -252,7 +235,6 @@ class _HomePageState extends State<HomePage> {
                             child: Container(
                               width: size.width / 2,
                               decoration: BoxDecoration(
-                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Padding(
@@ -260,14 +242,21 @@ class _HomePageState extends State<HomePage> {
                                 child: Column(
                                   children: [
                                     Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(width: 0.5)),
-                                        child: Image.asset(
-                                          toppicks.image,
-                                          width: 180,
-                                          height: 280,
-                                          fit: BoxFit.cover,
-                                        )),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl: toppicks.image,
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                                     
+                                    ),
+                                    
                                     const SizedBox(
                                       height: 5,
                                     ),
@@ -311,18 +300,19 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Text(
                         'Xem tất cả',
-                        style: TextStyle(fontSize: 20, color: Colors.black),
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
                       ),
                       Icon(
                         Icons.arrow_right,
                         size: 30,
-                        color: Colors.black,
                       )
                     ],
                   ),
                 ),
                 const Text(
-                  '"If you love something, just let it go. If it comes back, it’s yours forever. If it doesn’t, it was never meant to be..."',
+                  '"If you really love something, just let it go. If it comes back, it’s yours forever. If it doesn’t, it was never meant to be..."',
                   style: TextStyle(fontSize: 20),
                 )
               ],

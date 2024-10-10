@@ -1,7 +1,7 @@
 import 'package:book_store/models/book.dart';
 import 'package:book_store/common/chat.dart';
 import 'package:book_store/common/payment.dart';
-import 'package:book_store/pages/account.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,13 +16,11 @@ class GreatBookDetails extends StatefulWidget {
 
 class _GreatBookDetailsState extends State<GreatBookDetails> {
   final ValueNotifier<int> total = ValueNotifier<int>(1);
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
         centerTitle: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -31,7 +29,6 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
               "Quay lại",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
                 fontSize: 20,
               ),
             ),
@@ -45,8 +42,7 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
         ),
       ),
       body: SingleChildScrollView(
-        child: (
-          Padding(
+        child: (Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 15,
           ),
@@ -56,15 +52,20 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                 height: 15,
               ),
               Container(
-
                 decoration: BoxDecoration(
-                   border: Border.all(width: 1),
-                   ),
-                child: Image.asset(
-                  widget.grb.image,
-                  fit: BoxFit.cover,
-                 
+                  border: Border.all(width: 1),
                 ),
+                child: CachedNetworkImage(
+                  imageUrl: widget.grb.image,
+                  placeholder: (context, url) =>
+                      const CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+                // child: Image.asset(
+                //   widget.grb.image,
+                //   fit: BoxFit.cover,
+
+                // ),
               ),
               Center(
                 child: Text(
@@ -129,17 +130,14 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
               ),
             ],
           ),
-        )
-        ),
+        )),
       ),
       bottomNavigationBar: Container(
-        color: const Color.fromARGB(255, 234, 234, 234),
         padding: const EdgeInsets.all(10.0),
         height: 70, // Chiều cao cố định cho bottomNavigationBar
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // Nút "Chat ngay"
             Expanded(
               child: InkWell(
                 onTap: () {
@@ -154,13 +152,16 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                   children: [
                     Icon(
                       Icons.chat_bubble_outline,
-                      color: Colors.teal,
+                      // color: Colors.teal,
                       size: 25,
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Text('Chat ngay', style: TextStyle(color: Colors.teal)),
+                    Text(
+                      'Chat ngay',
+                      // style: TextStyle(color: Colors.teal)
+                    ),
                   ],
                 ),
               ),
@@ -170,12 +171,11 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
               color: Colors.grey,
               thickness: 1,
             ),
-            // Nút "Thêm vào Giỏ hàng"
+
             Expanded(
               child: InkWell(
                 onTap: () {
                   showModalBottomSheet(
-                      backgroundColor: Colors.white,
                       context: context,
                       builder: (BuildContext context) {
                         return Container(
@@ -217,7 +217,8 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                                             ),
                                           ),
                                           Text(
-                                            NumberFormat("#,##0.000", "en_US").format(widget.grb.price),
+                                            NumberFormat("#,##0.000", "en_US")
+                                                .format(widget.grb.price),
                                             style: const TextStyle(
                                               fontSize: 20,
                                               color: Color.fromARGB(
@@ -242,8 +243,7 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                                             InkWell(
                                               onTap: () {
                                                 if (total.value > 1) {
-                                                  total.value -=
-                                                      1; 
+                                                  total.value -= 1;
                                                 }
                                               },
                                               child: const Text(
@@ -252,24 +252,20 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                                               ),
                                             ),
                                             const SizedBox(width: 10),
-                                           
-                                           
                                             ValueListenableBuilder<int>(
                                               valueListenable: total,
                                               builder: (context, value, child) {
                                                 return Text(
                                                   "$value",
-                                                  style:
-                                                      const TextStyle(fontSize: 20),
+                                                  style: const TextStyle(
+                                                      fontSize: 20),
                                                 );
                                               },
                                             ),
                                             const SizedBox(width: 10),
-                                            
                                             InkWell(
                                               onTap: () {
-                                                total.value +=
-                                                    1; 
+                                                total.value += 1;
                                               },
                                               child: const Text(
                                                 "+",
@@ -291,12 +287,11 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                                 height: 50,
                                 child: ElevatedButton(
                                   onPressed: () {},
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue),
+                                  // style: ElevatedButton.styleFrom(
+                                  //     backgroundColor: Colors.blue),
                                   child: const Text(
                                     'Thêm vào giỏ hàng',
                                     style: TextStyle(
-                                      color: Colors.white,
                                       fontSize: 20,
                                     ),
                                   ),
@@ -313,14 +308,16 @@ class _GreatBookDetailsState extends State<GreatBookDetails> {
                   children: [
                     Icon(
                       Icons.shopping_cart,
-                      color: Colors.teal,
+                      // color: Colors.teal,
                       size: 25,
                     ),
                     SizedBox(
                       height: 5,
                     ),
                     Text('Thêm vào Giỏ hàng',
-                        style: TextStyle(color: Colors.teal, fontSize: 13)),
+                        style: TextStyle(
+                            // color: Colors.teal,
+                            fontSize: 13)),
                   ],
                 ),
               ),

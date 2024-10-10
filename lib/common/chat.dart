@@ -12,12 +12,12 @@ class Chat extends StatelessWidget {
 
   TextEditingController controller = TextEditingController();
     return Scaffold(
-      backgroundColor: Colors.white,
+    
       appBar: AppBar(
         centerTitle: true,
         title: Row(
           mainAxisAlignment:
-              MainAxisAlignment.spaceBetween, // Điều chỉnh để phân bố đều
+              MainAxisAlignment.spaceBetween, 
           children: [
             Row(
               // Row để chứa avatar và tên
@@ -26,7 +26,7 @@ class Chat extends StatelessWidget {
                   onPressed: () {},
                   child: ClipOval(
                     child: Image.network(
-                      'https://scontent.fhan2-5.fna.fbcdn.net/v/t39.30808-6/458153335_831558652444180_5456226854687816504_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=G-6Oc_n6vG8Q7kNvgFTP8DN&_nc_ht=scontent.fhan2-5.fna&_nc_gid=ABBV9a-3qU719zTZzHJ6kKt&oh=00_AYDUeeuypdSvU67s6HjmI96ZlEuSaRtSIg_cgWphrTGZiw&oe=67002FD1',
+                      'https://scontent.fhan2-5.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s480x480&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=Ys79g0KSfagQ7kNvgEuxz8M&_nc_ht=scontent.fhan2-5.fna&_nc_gid=AoqfV5zgHBX7qR3d-zEZT1m&oh=00_AYATHWxXJ5gXdb3F9k-iVrIt1Tz11WOmNqVXqJR-r_ftEw&oe=67229CFA',
                       width: 50.0,
                       height: 50.0,
                       fit: BoxFit.cover,
@@ -43,7 +43,7 @@ class Chat extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black,
+                       
                       ),
                     ),
                     Row(
@@ -51,15 +51,14 @@ class Chat extends StatelessWidget {
                         Container(
                           height: 10,
                           width: 10,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.green),
+                         
                         ),
                         const SizedBox(
                           width: 5,
                         ),
                         const Text(
                           'Đang online',
-                          style: TextStyle(fontSize: 15, color: Colors.black),
+                          style: TextStyle(fontSize: 15,),
                         ),
                       ],
                     ),

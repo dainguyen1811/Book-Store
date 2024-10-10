@@ -6,30 +6,22 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-    child: TextField(
-      decoration: InputDecoration(
-        hintText: "Tìm sách, tên tác giả",
-        prefixIcon: const Icon(
-          Icons.search,
-          size: 30,
-        ),
-        filled: true,
-        fillColor: Colors.grey.shade200,
-        contentPadding: const EdgeInsets.all(15),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey.shade200,
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: "Tìm sách, tên tác giả",
+          hintStyle: TextStyle(fontSize: 15),
+          prefixIcon: const Icon(
+            Icons.search,
+            size: 30,
           ),
-          borderRadius: BorderRadius.circular(15),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.grey.shade200,
+          filled: true,
+          contentPadding: const EdgeInsets.all(15),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(),
+            borderRadius: BorderRadius.circular(15),
           ),
-          borderRadius: BorderRadius.circular(15),
         ),
       ),
-    ),
-  );
-}
+    );
   }
+}

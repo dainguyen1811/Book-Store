@@ -1,15 +1,20 @@
+import 'package:book_store/auth/login_screen.dart';
+import 'package:book_store/auth/register_screen.dart';
+import 'package:book_store/bottom_nav_bar/bottom_custom.dart';
 import 'package:book_store/common/account_setting.dart';
 import 'package:book_store/common/chat.dart';
 import 'package:book_store/common/payment.dart';
+import 'package:book_store/models/theme_manager.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:book_store/dialog/alert.dart';
+import 'package:book_store/main.dart';
+import 'package:book_store/pages/item_menu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'account_items/account_page/purchased_order.dart';
-import 'account_items/finance.dart';
-import 'account_items/help_center.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'account_items/liked.dart';
-import 'account_items/profile_account_page.dart';
 import 'account_items/recently_viewed.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 class Account extends StatefulWidget {
   const Account({super.key});
@@ -19,619 +24,321 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  ThemeManager _themeManager = ThemeManager();
+  String? _userEmail;
+  @override
+  void initState() {
+    super.initState();
+    _loadUserEmail();
+  }
+
+  Future<void> _loadUserEmail() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _userEmail = prefs.getString('email');
+    });
+  }
+
+  Future<void> _logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('email');
+
+    setState(() {
+      _userEmail = null;
+    });
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => BottomCustom(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AccountSetting(),
-                          ),
-                        );
-                      },
-                      icon: const Icon(Icons.settings)),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Chat(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(CupertinoIcons.chat_bubble_2),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Payment(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(CupertinoIcons.shopping_cart),
-                  )
-                ],
-              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfileAccountPage(),
-                          ),
-                        );
-                      },
-                      child: ClipOval(
-                        child: Image.network(
-                          'https://scontent.fhan2-3.fna.fbcdn.net/v/t39.30808-1/349343515_792596609103521_5366526118614132792_n.jpg?stp=dst-jpg_s480x480&_nc_cat=111&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=DvjFY0EF8ZgQ7kNvgFdRI-r&_nc_ht=scontent.fhan2-3.fna&oh=00_AYDGYEcZb2TCZtkZ61oaAAgqjRmGmfkorUjzT0Vrr1NYYg&oe=67001E5B',
-                          width: 80.0, // Độ rộng của ảnh
-                          height: 80.0, // Chiều cao của ảnh
-                          fit: BoxFit.cover, // Đảm bảo ảnh được cắt đúng cách
-                        ),
+                    ClipOval(
+                      child: Image.network(
+                        'https://scontent.fhan2-5.fna.fbcdn.net/v/t1.30497-1/453178253_471506465671661_2781666950760530985_n.png?stp=dst-png_s480x480&_nc_cat=1&ccb=1-7&_nc_sid=136b72&_nc_ohc=Ys79g0KSfagQ7kNvgEuxz8M&_nc_ht=scontent.fhan2-5.fna&_nc_gid=AoqfV5zgHBX7qR3d-zEZT1m&oh=00_AYATHWxXJ5gXdb3F9k-iVrIt1Tz11WOmNqVXqJR-r_ftEw&oe=67229CFA',
+                        width: 80.0,
+                        height: 80.0,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     const SizedBox(
                       width: 10,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Lê Hà Thành',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
+                    if (_userEmail != null)
+                      Expanded(
+                        child: Text(
+                          _userEmail!, // Hiển thị email người dùng
+                          style: const TextStyle(fontSize: 18),
                         ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: [
-                            const Text('Người theo 0'),
-                            const SizedBox(
-                              width: 15,
+                      )
+                    else
+                      Row(
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero,
+                              ),
                             ),
-                            Container(
-                              height: 10,
-                              width: 1,
-                              color: Colors.grey,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ),
+                              );
+                            },
+                            child: const Center(
+                              child: Text(
+                                'Đăng nhập',
+                              ),
                             ),
-                            const SizedBox(
-                              width: 15,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisterScreen(),
+                                ),
+                              );
+                            },
+                            child: const Center(
+                              child: Text(
+                                'Đăng ký',
+                              ),
                             ),
-                            const Text('Đang theo dõi 0')
-                          ],
-                        )
-                      ],
+                          ),
+                        ],
+                      ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const SizedBox(
+                      height: 20,
                     ),
                   ],
                 ),
               ),
               const SizedBox(
-                height: 10,
+                height: 30,
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const PurchasedOrder(),
-                      ),
-                    );
+              ListTile(
+                leading: Icon(
+                  CupertinoIcons.settings,
+                  size: 30,
+                  color: Colors.blue,
+                ),
+                title: Text('Chế độ sáng / tối'),
+                 trailing: Switch(
+                  value: _themeManager.themeMode == ThemeMode.dark,
+                  onChanged: (value) {
+                    setState(() {
+                      _themeManager.toggleTheme(value); 
+                      print("Theme mode changed to: ${_themeManager.themeMode}"); 
+                    });
                   },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent, // Nền trong suốt
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // Bo viền nếu cần
-                    ),
-                  ),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.square_list,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Đơn mua',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Xem lịch sử đơn hàng',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                          Icon(
-                            Icons.arrow_right,
-                            size: 20,
-                            color: Colors.black,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
                 ),
               ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey.shade300,
+              ),
+              ItemMenu(CupertinoIcons.heart, 'Đã thích', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Liked(),
+                  ),
+                );
+              }, Colors.red),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey.shade300,
+              ),
+              ItemMenu(
+                CupertinoIcons.clock,
+                'Đã xem gần đây',
+                () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const RecentlyViewed(),
+                    ),
+                  );
+                },
+                Colors.blue,
+              ),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey.shade300,
+              ),
+              ItemMenu(Icons.help_outline, 'Trung tâm trợ giúp', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Chat(),
+                  ),
+                );
+              }, Colors.red),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey.shade300,
+              ),
+              ItemMenu(
+                  CupertinoIcons.star_circle,
+                  'Hài lòng với Subfi? Hãy đánh giá ngay!',
+                  () => _showRatingDialog(context),
+                  Colors.orangeAccent),
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: Colors.grey.shade300,
+              ),
+              ItemMenu(Icons.block_outlined, 'Yêu cầu huỷ tài khoản',
+                  () => _showCancellationDialog(context), Colors.red),
               Container(
                 width: double.infinity,
                 height: 1,
                 color: Colors.grey.shade300,
               ),
               const SizedBox(
-                height: 20,
+                height: 25,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor:
-                                Colors.transparent, // Nền trong suốt
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(0), // Bo viền nếu cần
-                            ),
-                          ),
-                          child: const Column(
-                            children: [
-                              Icon(
-                                CupertinoIcons.bag,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                ' Xác nhận',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor:
-                                Colors.transparent, // Nền trong suốt
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(0), // Bo viền nếu cần
-                            ),
-                          ),
-                          child: const Column(
-                            children: [
-                              Icon(
-                                CupertinoIcons.cube_box,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'Lấy hàng',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor:
-                                Colors.transparent, // Nền trong suốt
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(0), // Bo viền nếu cần
-                            ),
-                          ),
-                          child: const Column(
-                            children: [
-                              Icon(
-                                CupertinoIcons.star_circle,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text(
-                                'Đánh giá',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 15),
-                              )
-                            ],
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey.shade300,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Liked(),
+              if (_userEmail != null)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: _logout,
+                    child: const Center(
+                      child: Text(
+                        'Đăng xuất',
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
                     ),
                   ),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.heart,
-                            color: Colors.red,
-                          ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Đã thích',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_right,
-                        size: 20,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey.shade300,
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey.shade300,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const RecentlyViewed(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent, // Nền trong suốt
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // Bo viền nếu cần
-                    ),
-                  ),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.clock,
-                            color: Colors.blue,
-                          ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Đã xem gần đây',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_right,
-                        size: 20,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey.shade300,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Finance(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent, // Nền trong suốt
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // Bo viền nếu cần
-                    ),
-                  ),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.monetization_on,
-                            color: Colors.orangeAccent,
-                          ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Số dư TK',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_right,
-                        size: 20,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey.shade300,
-              ),
-              Container(
-                width: double.infinity,
-                height: 8,
-                color: Colors.grey.shade300,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AccountSetting(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent, // Nền trong suốt
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // Bo viền nếu cần
-                    ),
-                  ),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            CupertinoIcons.person,
-                            color: Colors.blueAccent,
-                          ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Thiết lập tài khoản',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_right,
-                        size: 20,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey.shade300,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HelpCenter(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent, // Nền trong suốt
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // Bo viền nếu cần
-                    ),
-                  ),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.help_outline,
-                            color: Colors.red,
-                          ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Trung tâm trợ giúp',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_right,
-                        size: 20,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 1,
-                color: Colors.grey.shade300,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Chat(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: Colors.transparent, // Nền trong suốt
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0), // Bo viền nếu cần
-                    ),
-                  ),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.headset,
-                            color: Colors.red,
-                          ),
-                          SizedBox(width: 8.0),
-                          Text(
-                            'Trò chuyện với SUBFI',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ],
-                      ),
-                      Icon(
-                        Icons.arrow_right,
-                        size: 20,
-                        color: Colors.black,
-                      )
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+void _showCancellationDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        // backgroundColor: Colors.white,
+        title: Center(
+          child: Text('Xác nhận yêu cầu'),
+        ),
+        content: Text(
+          'Chúng tôi rất lấy làm tiếc khi bạn muốn rời xa Subfi, nhưng hãy lưu ý các tài khoản đã bị xoá sẽ không thể được mở trở lại',
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 15),
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Hủy',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Đồng ý',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+            ],
+          )
+        ],
+      );
+    },
+  );
+}
+
+void _showRatingDialog(BuildContext context) {
+  final InAppReview inAppReview = InAppReview.instance;
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        // backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+        ),
+        title: Center(child: Text('Đánh giá của bạn')),
+        content: RatingDialog(),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(
+                  'Đóng',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  inAppReview.openStoreListing(appStoreId: '');
+                },
+                child: Text(
+                  'Gửi',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+        // actions: [
+
+        // ],
+      );
+    },
+  );
 }
